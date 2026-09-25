@@ -1,0 +1,233 @@
+@import "./variables.less";
+
+html {
+	font-size: @baseFontSize;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.tasks-page {
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+	gap: @6x;
+	align-items: start;
+	padding: @12x clamp(@2x, 7vw, @27x);
+	background: @background;
+	color: @ink;
+	font-family: @fontFamilyBase;
+
+	.tasks-panel-header,
+	.task-form-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: @4x;
+	}
+
+	.tasks-panel-eyebrow {
+		margin-bottom: @2x;
+		color: @accent;
+		font-family: @fontFamilyBase;
+		font-size: @fontSizeTiny;
+		font-weight: @fontWeightBold;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.tasks-panel,
+	.task-form {
+		background: @surface;
+		border: 1px solid @line;
+		border-radius: 18px;
+		box-shadow: 0 @4x @10x rgba(28, 36, 48, 0.06);
+	}
+
+	.tasks-panel {
+		padding: clamp(@6x, 4vw, @11x);
+
+		h1,
+		h2,
+		p {
+			margin: @0x;
+		}
+
+		h1 {
+			font-size: clamp(32px, 5vw, 52px);
+			line-height: 1;
+		}
+
+		.tasks-panel-count {
+			padding: @2x @3x;
+			border-radius: 99px;
+			background: #fff0eb;
+			color: @accent;
+			font-family: @fontFamilyBase;
+			font-size: @fontSizeXSmall;
+			font-weight: @fontWeightBold;
+			white-space: nowrap;
+		}
+	}
+
+	.task-list {
+		display: grid;
+		gap: @2x;
+		margin: @8x @0x @6x;
+		padding: @0x;
+		list-style: none;
+
+		.task-list-item {
+			display: grid;
+			grid-template-columns: 36px minmax(0, 1fr) auto;
+			gap: @3x;
+			align-items: center;
+			padding: @4x @0x;
+			border-top: 1px solid @line;
+		}
+
+		.task-list-number {
+			color: @muted;
+			font-family: @fontFamilyBase;
+			font-size: @fontSizeXSmall;
+		}
+
+		.task-list-content {
+			min-width: 0;
+
+			h2 {
+				overflow: hidden;
+				font-size: @fontSizeLarge;
+				font-weight: @fontWeightSemiBold;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			p {
+				margin-top: @1x;
+				overflow: hidden;
+				color: @muted;
+				font-family: @fontFamilyBase;
+				font-size: @fontSizeSmall;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+
+	.priority {
+		padding: @1x @2x;
+		border-radius: 99px;
+		font-family: @fontFamilyBase;
+		font-size: @fontSizeTiny;
+		font-weight: @fontWeightBold;
+		text-transform: capitalize;
+
+		&.priority-high {
+			background: #ffe4df;
+			color: #c8452f;
+		}
+
+		&.priority-medium {
+			background: #fff1c9;
+			color: #9b7200;
+		}
+
+		&.priority-low {
+			background: #def3e8;
+			color: #24744b;
+		}
+	}
+
+	.button {
+		border: @0x;
+		border-radius: 10px;
+		cursor: pointer;
+		font-family: @fontFamilyBase;
+		font-size: @fontSizeSmall;
+		font-weight: @fontWeightBold;
+		transition: transform 160ms ease, box-shadow 160ms ease;
+
+		&:hover {
+			transform: translateY(-2px);
+		}
+
+		&.button-primary {
+			padding: @3x @4x;
+			background: @ink;
+			color: white;
+			box-shadow: 0 @2x @4x rgba(28, 36, 48, 0.15);
+		}
+
+		&.button-secondary {
+			width: 100%;
+			margin-top: @2x;
+			padding: @3x;
+			background: @accent;
+			color: white;
+		}
+	}
+
+	.task-form {
+		padding: @7x;
+
+		h2 {
+			font-size: @fontSizeXLarge;
+		}
+
+		.task-form-close {
+			width: 30px;
+			height: 30px;
+			border: @0x;
+			border-radius: 50%;
+			background: #f1f2f2;
+			color: @ink;
+			cursor: pointer;
+			font-size: @fontSizeXLarge;
+			line-height: 1;
+		}
+
+		form {
+			display: grid;
+			gap: @2x;
+			margin-top: @7x;
+		}
+
+		label {
+			margin-top: @2x;
+			color: @muted;
+			font-family: @fontFamilyBase;
+			font-size: @fontSizeXSmall;
+			font-weight: @fontWeightBold;
+		}
+
+		input,
+		textarea,
+		select {
+			width: 100%;
+			border: 1px solid @line;
+			border-radius: 9px;
+			outline: @0x;
+			padding: @3x;
+			color: @ink;
+			font: @fontSizeDefault @fontFamilyBase;
+
+			&:focus {
+				border-color: @accent;
+				box-shadow: 0 0 0 3px rgba(232, 93, 63, 0.12);
+			}
+		}
+
+		textarea {
+			resize: vertical;
+		}
+	}
+}
+
+@media (max-width: 700px) {
+	.tasks-page {
+		grid-template-columns: 1fr;
+		padding: @6x @4x;
+	}
+}

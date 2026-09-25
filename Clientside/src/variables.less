@@ -1,0 +1,83 @@
+// Colors
+@ink: #1c2430;
+@muted: #687384;
+@line: #e6e9ee;
+@surface: #ffffff;
+@accent: #e85d3f;
+@background: #f5f6f2;
+@errorColor: #e60a0a; //error color
+
+@textPrimary: #2E4156;
+@textPrimaryTransparent-5: color-mix(in srgb, @textPrimary 5%, transparent);
+@textPrimaryTransparent-10: color-mix(in srgb, @textPrimary 10%, transparent);
+@textPrimaryTransparent-12: color-mix(in srgb, @textPrimary 12%, transparent);
+@textPrimaryTransparent-30: color-mix(in srgb, @textPrimary 30%, transparent);
+@textPrimaryTransparent-50: color-mix(in srgb, @textPrimary 50%, transparent);
+@textPrimaryTransparent-70: color-mix(in srgb, @textPrimary 70%, transparent);
+@textPrimaryFadeColor: var(--asideFadedTextColor, @textSecondary);
+@textPrimaryFadeFallbackColor: #788595;
+@textSecondary: fade(@textPrimary, 95%);
+@textSecondarySub: fade(@textPrimary, 90%);
+
+// Typography Base
+@fontFamilyBase: "Source Sans Pro", Arial, sans-serif;
+@baseFontSize: 14px; // 1rem = 14px
+
+// Common space values for variables
+@0x: 0rem;       // 0px - 0x
+@1x: 0.286rem;  // 4px - 1x
+@2x: 0.571rem;  // 8px - 2x
+@3x: 0.857rem;  // 12px - 3x
+@4x: 1.143rem;  // 16px - 4x
+@5x: 1.429rem;  // 20px - 5x
+@6x: 1.714rem;  // 24px - 6x
+@7x: 2rem;      // 28px - 7x
+@8x: 2.286rem;  // 32px - 8x
+@9x: 2.571rem;  // 36px - 9x
+@10x: 2.857rem; // 40px - 10x
+@11x: 3.143rem; // 44px - 11x
+@12x: 3.429rem; // 48px - 12x
+@13x: 3.714rem; // 52px - 13x
+@14x: 4rem;     // 56px - 14x
+@15x: 4.286rem; // 60px - 15x
+@16x: 4.571rem; // 64px - 16x
+@17x: 4.857rem; // 68px - 17x
+@18x: 5.143rem; // 72px - 18x
+@19x: 5.429rem; // 76px - 19x
+@20x: 5.714rem; // 80px - 20x
+@21x: 6rem;     // 84px - 21x
+@22x: 6.286rem; // 88px - 22x
+@23x: 6.571rem; // 92px - 23x
+@24x: 6.857rem; // 96px - 24x
+@25x: 7.143rem; // 100px - 25x
+@26x: 7.429rem; // 104px - 26x
+@27x: 7.714rem; // 108px - 27x
+@28x: 8rem;     // 112px - 28x
+@29x: 8.286rem; // 116px - 29x
+@30x: 8.571rem; // 120px - 30x
+
+// Font Sizes
+@fontSizeXXLarge: 1.714rem; //24px h1
+@fontSizeXLarge: 1.429rem; //20px h2
+@fontSizeLarge: 1.286rem; //18px h3
+@fontSizeXMedium: 1.143rem; //16px h4
+@fontSizeMedium: 1.071rem; //15px h5
+@fontSizeDefault: 1rem; //14px h6,p
+@fontSizeSmall: 0.929rem; //13px
+@fontSizeXSmall: 0.857rem; //12px
+@fontSizeTiny: 0.786rem; //11px;
+@fontSizeMini: 0.714rem; //10px;
+
+// Font weights
+@fontWeightLight: 300;
+@fontWeightNormal: 400; //h6,p
+@fontWeightMedium: 500;
+@fontWeightSemiBold: 600; // h1,h2,h3,h4,h5
+@fontWeightBold: 700;
+@fontWeightBlack: 900;
+
+@borderRadiusRound: 50%;
+@borderRadiusCRound: 50px;
+@borderRadius3x: 8px;
+@borderRadius2x: 4px;
+@borderRadius1x: 2px;

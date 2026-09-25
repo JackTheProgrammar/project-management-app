@@ -1,0 +1,57 @@
+@import "../../variables.less";
+@import "../../mixins.less";
+
+.jd-org-top-bar {
+	width: 100%;
+	height: @12x;
+	background: @surface;
+	border-bottom: 1px solid @line;
+	.flex();
+	.align-center();
+	.justify-content-space-between();
+	padding: @0x @6x;
+	box-sizing: border-box;
+	font-family: @fontFamilyBase;
+
+	.jd-org-top-bar-left-panel {
+		.flex();
+		.align-center();
+
+		.jd-org-top-bar-logo-container {
+			.flex();
+			.align-center();
+			height: 48px;
+
+			img {
+				height: 100%;
+				width: auto;
+				object-fit: contain;
+				border-radius: 6px;
+			}
+		}
+	}
+
+	.jd-org-top-bar-right-panel {
+		.flex();
+		.align-center();
+
+		.jd-org-top-bar-user-profile {
+			.flex();
+			.align-center();
+			background: @background;
+			border: 1px solid @line;
+			padding: @2x @4x;
+			border-radius: 99px;
+			color: @ink;
+			font-size: @fontSizeSmall;
+			font-weight: @fontWeightBold;
+			cursor: pointer;
+			transition: background 160ms ease, border-color 160ms ease;
+
+			&:hover {
+				background: #eaede6;
+				border-color: @muted;
+			}
+		}
+	}
+}
