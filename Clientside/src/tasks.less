@@ -4,17 +4,8 @@ html {
 	font-size: @baseFontSize;
 }
 
-* {
-	box-sizing: border-box;
-}
-
 .tasks-page {
-	min-height: 100vh;
-	display: grid;
-	grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
-	gap: @6x;
-	align-items: start;
-	padding: @12x clamp(@2x, 7vw, @27x);
+	padding: @6x;
 	background: @background;
 	color: @ink;
 	font-family: @fontFamilyBase;
@@ -72,8 +63,8 @@ html {
 	}
 
 	.task-list {
-		display: grid;
-		gap: @2x;
+		height: 350px;
+		overflow: scroll;
 		margin: @8x @0x @6x;
 		padding: @0x;
 		list-style: none;

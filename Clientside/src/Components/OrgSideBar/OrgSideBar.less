@@ -2,88 +2,123 @@
 @import "../../mixins.less";
 
 .jd-org-sidebar {
-	width: 92px;
-	min-height: calc(100vh - @12x);
-	background: @surface;
-	border-inline-end: 1px solid @line;
-	padding: @6x @2x;
-	box-sizing: border-box;
-	font-family: @fontFamilyBase;
+	.dynamic-size(100%, @12x);
+	background: @sidebarBg;
+	padding: @3x @6x;
+	.flex();
+	.direction-column();
+	.justify-content-center();
+	.align-center();
 
 	.jd-org-sidebar-nav {
-		.flex();
-		.justify-content-center();
+		width: 100%;
 	}
 
 	.jd-org-sidebar-list {
-		list-style: none;
-		margin: @0x;
-		padding: @0x;
 		.flex();
-		.direction-column();
-		gap: @3x;
+		.direction-row();
+		gap: @5x;
 		width: 100%;
 
 		.jd-org-sidebar-item {
-			width: 100%;
+			width: auto;
+			max-width: 120px;
+			padding: 0px @3x;
 
 			.jd-org-sidebar-link {
 				.flex();
-				.direction-column();
 				.align-center();
-				.justify-content-center();
-				padding: @4x @2x;
-				border-radius: 14px;
-				color: @ink;
+				.justify-content-space-between();
+				border-radius: 16px;
+				color: @sidebarText;
 				text-decoration: none;
-				transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+				position: relative;
+				transition: background 160ms ease, color 160ms ease;
+
+				.jd-org-sidebar-content-wrapper {
+					.flex();
+					.align-center();
+					gap: @3x;
+				}
 
 				.jd-org-sidebar-icon {
 					font-style: normal;
-					font-size: @fontSizeXXLarge;
+					font-size: @fontSizeLarge;
 					line-height: 1;
-					margin-block-end: @2x;
 				}
 
 				.jd-org-sidebar-text {
-					font-size: @fontSizeSmall;
+					font-size: @fontSizeLarge;
 					font-weight: @fontWeightMedium;
-					text-align: center;
+				}
+
+				.jd-org-sidebar-indicator {
+					display: none;
+					width: 16px;
+					height: 4px;
+					background: #8b949e;
+					border-radius: 99px;
 				}
 
 				&:hover {
-					background: @background;
-					color: @accent;
+					background: @sidebarHoverBg;
+					color: #ffffff;
 				}
 
 				&.active {
-					background: #fff0eb;
-					color: @accent;
-					font-weight: @fontWeightBold;
+					background: @sidebarActiveBg;
+					color: #ffffff;
+					font-weight: @fontWeightSemiBold;
+
+					&::before {
+						content: "";
+						position: absolute;
+						inset-inline-start: 0;
+						top: 20%;
+						height: 60%;
+						width: 4px;
+						background: @sidebarActiveIndicator;
+						border-radius: 0 4px 4px 0;
+					}
+
+					.jd-org-sidebar-indicator {
+						display: block;
+					}
 				}
 			}
 		}
 	}
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
 	.jd-org-sidebar {
-		width: 100%;
+		.dynamic-size(100%, auto);
 		min-height: auto;
-		border-inline-end: none;
-		border-block-end: 1px solid @line;
 		padding: @3x @4x;
 
 		.jd-org-sidebar-list {
 			.direction-row();
-			justify-content: space-around;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: @2x;
 
 			.jd-org-sidebar-item {
 				width: auto;
-				flex: 1;
 
 				.jd-org-sidebar-link {
-					padding: @2x;
+					padding: @2x @3x;
+
+					.jd-org-sidebar-text {
+						display: none;
+					}
+
+					.jd-org-sidebar-indicator {
+						display: none;
+					}
+
+					&.active::before {
+						display: none;
+					}
 				}
 			}
 		}

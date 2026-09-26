@@ -14,6 +14,8 @@ function OrgTopBar() {
           </div>
         </div>
         <div className="jd-org-top-bar-right-panel">
+          <div>
+          </div>
           <div className="jd-org-top-bar-user-profile">
             <span>User Profile</span>
           </div>
