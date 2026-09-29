@@ -2,12 +2,10 @@ import { React } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import OrgTopBar from "./Components/OrgTopBar/OrgTopBar";
 import OrgSideBar from "./Components/OrgSideBar/OrgSideBar";
-import './Projects.less'
-
+import "./Projects.less";
 
 function Projects() {
   const { projectId } = useParams();
-  console.log(projectId);
 
   return (
     <>

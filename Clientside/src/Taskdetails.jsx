@@ -6,26 +6,34 @@ function Taskdetails() {
   const params = useParams();
   const navigate = useNavigate();
   const [task, setTask] = useState(null);
+  xw;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:2001/getTask/" + params.taskId)
+    fetch(
+      `http://localhost:2001/projects/${params.projectId}/getTask/${params.taskId}`,
+    )
       .then((response) => response.json())
       .then((data) => {
-        setTask(data.project);
+        setTask(data.task);
         setLoading(false);
       })
       .catch((err) => {
         console.error("Failed to fetch task details", err);
         setLoading(false);
       });
-  }, [params.taskId]);
+  }, []);
 
   if (loading) {
     return (
       <div className="task-detail-page">
-        <div className="task-detail-card" style={{ textAlign: "center", padding: "64px 24px" }}>
-          <p style={{ fontFamily: "Arial, sans-serif", color: "#687384" }}>Loading task details...</p>
+        <div
+          className="task-detail-card"
+          style={{ textAlign: "center", padding: "64px 24px" }}
+        >
+          <p style={{ fontFamily: "Arial, sans-serif", color: "#687384" }}>
+            Loading task details...
+          </p>
         </div>
       </div>
     );
@@ -34,10 +42,18 @@ function Taskdetails() {
   if (!task) {
     return (
       <div className="task-detail-page">
-        <div className="task-detail-card" style={{ textAlign: "center", padding: "64px 24px" }}>
+        <div
+          className="task-detail-card"
+          style={{ textAlign: "center", padding: "64px 24px" }}
+        >
           <h2>Task not found</h2>
-          <button className="back-button" onClick={() => navigate("/tasks")} style={{ marginTop: "16px" }}>
-            &larr; Back to Tasks
+          <button
+            className="back-button"
+            onClick={() => navigate(`/projects/${task.projectId}/tasks`)}
+            style={{ marginTop: "16px" }}
+          >
+            &larr; Back to Tasks // Updated to navigate to the correct tasks
+            route under the project
           </button>
         </div>
       </div>
@@ -48,18 +64,23 @@ function Taskdetails() {
     <div className="task-detail-page">
       <div className="task-detail-card">
         <div className="task-detail-header">
-          <span className="task-detail-id">TASK #{String(task.id || "").padStart(2, "0")}</span>
-          <button className="back-button" onClick={() => navigate("/tasks")}>
+          <span className="task-detail-id">
+            TASK #{String(task.id || "").padStart(2, "0")}
+          </span>
+          <button
+            className="back-button"
+            onClick={() => navigate(`/projects/${task.projectId}/tasks`)}
+          >
             &larr; Return to Tasks
           </button>
         </div>
 
         <div className="task-detail-body">
-          <h1>{task.name}</h1>
+          <h1>{task.taskName}</h1>
 
           <div className="task-section-group">
             <span className="task-detail-label">Description</span>
-            <p>{task.desc || "No description provided."}</p>
+            <p>{task.taskDesc || "No description provided."}</p>
           </div>
         </div>
 
@@ -67,8 +88,10 @@ function Taskdetails() {
           <div className="task-section-group">
             <span className="task-detail-label">Priority Level</span>
           </div>
-          <span className={`priority priority-${task.priority || "medium"}`}>
-            {task.priority || "medium"}
+          <span
+            className={`priority priority-${task.taskPriority || "medium"}`}
+          >
+            {task.taskPriority || "medium"}
           </span>
         </div>
       </div>
