@@ -32,6 +32,77 @@
 		padding-bottom: @5x;
 	}
 
+	.task-detail-header-actions {
+		display: flex;
+		align-items: center;
+		gap: @3x;
+		flex-wrap: wrap;
+	}
+
+	.edit-button {
+		background: @accent;
+		color: #fff;
+		border: @0x;
+		border-radius: 99px;
+		padding: @2x @4x;
+		font-family: @fontFamilyBase;
+		font-size: @fontSizeSmall;
+		font-weight: @fontWeightBold;
+		cursor: pointer;
+	}
+
+	.task-edit-form {
+		display: flex;
+		flex-direction: column;
+		gap: @3x;
+
+		label {
+			font-size: @fontSizeSmall;
+			font-weight: @fontWeightBold;
+			color: @muted;
+		}
+
+		input,
+		textarea,
+		select {
+			font-family: @fontFamilyBase;
+			font-size: @fontSizeDefault;
+			padding: @3x @4x;
+			border: 1px solid @line;
+			border-radius: 12px;
+		}
+
+		textarea {
+			resize: vertical;
+		}
+	}
+
+	.task-edit-buttons {
+		display: flex;
+		gap: @3x;
+		margin-top: @2x;
+	}
+
+	.save-button {
+		background: @accent;
+		color: #fff;
+		border: @0x;
+		border-radius: 99px;
+		padding: @3x @5x;
+		font-weight: @fontWeightBold;
+		cursor: pointer;
+	}
+
+	.cancel-button {
+		background: #f1f2f2;
+		color: @ink;
+		border: @0x;
+		border-radius: 99px;
+		padding: @3x @5x;
+		font-weight: @fontWeightBold;
+		cursor: pointer;
+	}
+
 	.task-detail-id {
 		color: @accent;
 		font-family: @fontFamilyBase;

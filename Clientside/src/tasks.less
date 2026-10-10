@@ -46,7 +46,7 @@ html {
 		}
 
 		h1 {
-			font-size: clamp(32px, 5vw, 52px);
+			font-size: 32px;
 			line-height: 1;
 		}
 
@@ -81,6 +81,25 @@ html {
 			color: @muted;
 			font-family: @fontFamilyBase;
 			font-size: @fontSizeXSmall;
+		}
+
+		.delete-button {
+			flex-shrink: 0;
+			margin-left: @2x;
+			padding: @2x @4x;
+			border: 1px solid @themeColor;
+			border-radius: 10px;
+			background: transparent;
+			color: @themeColor;
+			font-family: @fontFamilyBase;
+			font-size: @fontSizeSmall;
+			font-weight: @fontWeightBold;
+			cursor: pointer;
+			transition: background 160ms ease, color 160ms ease;
+
+			&:hover {
+				background: fade(@themeColor, 8%);
+			}
 		}
 
 		.task-list-content {
@@ -145,9 +164,9 @@ html {
 
 		&.button-primary {
 			padding: @3x @4x;
-			background: @ink;
+			background: @themeColor;
 			color: white;
-			box-shadow: 0 @2x @4x rgba(28, 36, 48, 0.15);
+			box-shadow: 0 @2x @4x fade(@themeColor, 35%);
 		}
 
 		&.button-secondary {

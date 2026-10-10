@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import CenterModal from "./Components/CenterModal/CenterModal";
 import "./tasks.less";
 
 function Tasks() {
@@ -11,6 +12,8 @@ function Tasks() {
   const [taskDesc, setTaskDesc] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
   const [openTaskSection, setopenTaskSection] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   useEffect(() => {
     const getTasks = async () => {
@@ -74,27 +77,46 @@ function Tasks() {
     navigate(`/projects/${projectId}/taskdetails/${element}`);
   }
 
-  async function deleteTask(event, id) {
+  function openDeleteModal(event, task) {
     event.stopPropagation();
+    setTaskToDelete(task);
+    setShowDeleteModal(true);
+  }
+
+  function closeDeleteModal() {
+    setShowDeleteModal(false);
+    setTaskToDelete(null);
+  }
+
+  async function confirmDeleteTask() {
+    if (!taskToDelete) {
+      return;
+    }
+
+    const id = taskToDelete.id;
+
     try {
-      const response = await fetch(`http://localhost:2003/projects/${projectId}/deleteTask/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `http://localhost:2003/projects/${projectId}/deleteTask/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('Task deleted:', data);
+      console.log("Task deleted:", data);
 
-      // Update the tasks state to remove the deleted task
-      setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+      closeDeleteModal();
     } catch (error) {
-      console.error('Error deleting task:', error);
+      console.error("Error deleting task:", error);
     }
   }
   return (
@@ -126,7 +148,10 @@ function Tasks() {
               >
                 {data.taskPriority || "medium"}
               </span>
-              <button className="delete-button" onClick={(e) => deleteTask(e, data.id)}>
+              <button
+                className="delete-button"
+                onClick={(e) => openDeleteModal(e, data)}
+              >
                 <span>Delete</span>
               </button>
             </li>
@@ -194,6 +219,28 @@ function Tasks() {
           </form>
         </section>
       )}
+      <CenterModal
+        isOpen={showDeleteModal}
+        title="Delete task"
+        onClose={closeDeleteModal}
+        footerButtons={[
+          {
+            label: "Cancel",
+            variant: "cancel",
+            onClick: closeDeleteModal,
+          },
+          {
+            label: "Delete",
+            variant: "primary",
+            onClick: confirmDeleteTask,
+          },
+        ]}
+      >
+        <p>
+          Are you sure you want to delete{" "}
+          <strong>{taskToDelete?.taskName}</strong>? This cannot be undone.
+        </p>
+      </CenterModal>
       <Outlet />
     </main>
   );

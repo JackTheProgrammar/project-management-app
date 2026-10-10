@@ -19,6 +19,7 @@ app.use((err, req, res, next) => {
 
 // testing purpose
 app.get("/", (req, res) => {
+  console.log("Server is running");
   res.json({ message: "Server is running" });
 });
 
@@ -99,6 +100,36 @@ app.post("/projects/:projectId/createTask", (req, res) => {
   res.json({
     success: true,
     task: projects,
+  });
+});
+
+app.put("/projects/:projectId/updateTask/:taskId", (req, res) => {
+  var { projectId, taskId } = req.params;
+  var { taskName, taskDesc, taskPriority } = req.body;
+
+  var data = fs.readFileSync("./data/tasks.json", "utf-8");
+  var tasks = JSON.parse(data);
+
+  var taskIndex = tasks.findIndex(
+    (task) => task.projectId == projectId && task.id == taskId,
+  );
+
+  if (taskIndex === -1) {
+    return res.status(404).json({
+      success: false,
+      message: "Task not found",
+    });
+  }
+
+  tasks[taskIndex].taskName = taskName;
+  tasks[taskIndex].taskDesc = taskDesc;
+  tasks[taskIndex].taskPriority = taskPriority;
+
+  fs.writeFileSync("./data/tasks.json", JSON.stringify(tasks), "utf-8");
+
+  res.json({
+    success: true,
+    task: tasks[taskIndex],
   });
 });
 

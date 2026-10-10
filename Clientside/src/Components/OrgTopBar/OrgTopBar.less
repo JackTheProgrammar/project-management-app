@@ -4,8 +4,8 @@
 .jd-org-top-bar {
 	width: 100%;
 	height: @12x;
-	background: @surface;
-	border-bottom: 1px solid @line;
+	background: @themeColor;
+	border-bottom: 1px solid darken(@themeColor, 6%);
 	.flex();
 	.align-center();
 	.justify-content-space-between();
@@ -38,19 +38,19 @@
 		.jd-org-top-bar-user-profile {
 			.flex();
 			.align-center();
-			background: @background;
-			border: 1px solid @line;
+			background: fade(#ffffff, 12%);
+			border: 1px solid fade(#ffffff, 22%);
 			padding: @2x @4x;
 			border-radius: 99px;
-			color: @ink;
+			color: #ffffff;
 			font-size: @fontSizeSmall;
 			font-weight: @fontWeightBold;
 			cursor: pointer;
 			transition: background 160ms ease, border-color 160ms ease;
 
 			&:hover {
-				background: #eaede6;
-				border-color: @muted;
+				background: fade(#ffffff, 20%);
+				border-color: fade(#ffffff, 35%);
 			}
 		}
 	}

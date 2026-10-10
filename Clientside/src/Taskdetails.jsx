@@ -8,8 +8,12 @@ function Taskdetails() {
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editDesc, setEditDesc] = useState("");
+  const [editPriority, setEditPriority] = useState("medium");
+
   useEffect(() => {
-    console.time('API Time');
     fetch(
       `http://localhost:2003/projects/${params.projectId}/getTask/${params.taskId}`,
     )
@@ -22,8 +26,51 @@ function Taskdetails() {
         console.error("Failed to fetch task details", err);
         setLoading(false);
       });
-    console.timeEnd('API Time');
-  }, []);
+  }, [params.projectId, params.taskId]);
+
+  function handleEditClick() {
+    setEditName(task.taskName);
+    setEditDesc(task.taskDesc || "");
+    setEditPriority(task.taskPriority || "medium");
+    setIsEditing(true);
+  }
+
+  function handleCancelEdit() {
+    setIsEditing(false);
+  }
+
+  async function handleSave() {
+    const updatedTask = {
+      taskName: editName,
+      taskDesc: editDesc,
+      taskPriority: editPriority,
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:2003/projects/${params.projectId}/updateTask/${params.taskId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedTask),
+        },
+      )
+      const data = await response.json();
+      console.log("data", data);
+      if (data.success) {
+        setTask(data.task);
+        setIsEditing(false);
+      } else {
+        alert("Could not save task");
+      }
+    }
+    catch (error) {
+      console.error("Failed to save task", error);
+      alert("Could not save task");
+    }
+  }
 
   if (loading) {
     return (
@@ -50,11 +97,10 @@ function Taskdetails() {
           <h2>Task not found</h2>
           <button
             className="back-button"
-            onClick={() => navigate(`/projects/${task.projectId}/tasks`)}
+            onClick={() => navigate(`/projects/${params.projectId}/tasks`)}
             style={{ marginTop: "16px" }}
           >
-            &larr; Back to Tasks // Updated to navigate to the correct tasks
-            route under the project
+            &larr; Back to Tasks
           </button>
         </div>
       </div>
@@ -68,33 +114,82 @@ function Taskdetails() {
           <span className="task-detail-id">
             TASK #{String(task.id || "").padStart(2, "0")}
           </span>
-          <button
-            className="back-button"
-            onClick={() => navigate(`/projects/${task.projectId}/tasks`)}
-          >
-            &larr; Return to Tasks
-          </button>
-        </div>
-
-        <div className="task-detail-body">
-          <h1>{task.taskName}</h1>
-
-          <div className="task-section-group">
-            <span className="task-detail-label">Description</span>
-            <p>{task.taskDesc || "No description provided."}</p>
+          <div className="task-detail-header-actions">
+            {!isEditing && (
+              <button className="edit-button" onClick={handleEditClick}>
+                Edit
+              </button>
+            )}
+            <button
+              className="back-button"
+              onClick={() => navigate(`/projects/${task.projectId}/tasks`)}
+            >
+              &larr; Return to Tasks
+            </button>
           </div>
         </div>
 
-        <div className="task-detail-footer">
-          <div className="task-section-group">
-            <span className="task-detail-label">Priority Level</span>
+        {isEditing ? (
+          <div className="task-edit-form">
+            <label htmlFor="edit-task-name">Task name</label>
+            <input
+              id="edit-task-name"
+              type="text"
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+            />
+
+            <label htmlFor="edit-task-desc">Description</label>
+            <textarea
+              id="edit-task-desc"
+              value={editDesc}
+              onChange={(e) => setEditDesc(e.target.value)}
+              rows="4"
+            />
+
+            <label htmlFor="edit-task-priority">Priority</label>
+            <select
+              id="edit-task-priority"
+              value={editPriority}
+              onChange={(e) => setEditPriority(e.target.value)}
+            >
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+
+            <div className="task-edit-buttons">
+              <button className="save-button" onClick={handleSave}>
+                Save
+              </button>
+              <button className="cancel-button" onClick={handleCancelEdit}>
+                Cancel
+              </button>
+            </div>
           </div>
-          <span
-            className={`priority priority-${task.taskPriority || "medium"}`}
-          >
-            {task.taskPriority || "medium"}
-          </span>
-        </div>
+        ) : (
+          <>
+            <div className="task-detail-body">
+              <h1>{task.taskName}</h1>
+
+              <div className="task-section-group">
+                <span className="task-detail-label">Description</span>
+                <p>{task.taskDesc || "No description provided."}</p>
+              </div>
+            </div>
+
+            <div className="task-detail-footer">
+              <div className="task-section-group">
+                <span className="task-detail-label">Priority Level</span>
+              </div>
+              <span
+                className={`priority priority-${task.taskPriority || "medium"}`}
+              >
+                {task.taskPriority || "medium"}
+              </span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
