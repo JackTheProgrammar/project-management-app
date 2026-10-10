@@ -13,12 +13,20 @@ function Tasks() {
   const [openTaskSection, setopenTaskSection] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:2001/projects/${projectId}/getTasks/`)
-      .then((response) => response.json())
-      .then((data) => {
+    const getTasks = async () => {
+      try {
+        const response = await fetch(`http://localhost:2003/projects/${projectId}/getTasks`);
+        const data = await response.json();
+        console.log(data);
         setTasks(data.tasks);
-      });
-  }, []);
+        console.log('Loaded tasks from API');
+      } catch (error) {
+        console.error("Failed to get tasks:", error);
+      }
+    };
+
+    getTasks();
+  }, [projectId]);
 
   function addTask() {
     let newtask = {
@@ -29,17 +37,25 @@ function Tasks() {
       taskPriority: taskPriority,
     };
     setTasks([...tasks, newtask]);
-    fetch("http://localhost:2001/createTask", {
+    fetch(`http://localhost:2003/projects/${projectId}/createTask`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newtask),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log("1st then — response:", response);   // Response {status: 200, ...}
+        const jsonPromise = response.json();
+        console.log("1st then — returned value:", jsonPromise);  // Promise {<pending>}
+        return jsonPromise;                              // ← returning a PROMISE
+      })
       .then((data) => {
-        console.log(data);
+        console.log("2nd then — data:", data);           // { id: 5, title: "test", ... }
+        return data;
+      })
+      .then((again) => {
+        console.log("3rd then — again:", again);         // same object
       });
+
     setTaskName("");
     setTaskDesc("");
     setTaskPriority("");
@@ -56,6 +72,30 @@ function Tasks() {
 
   function openDetailsPage(element) {
     navigate(`/projects/${projectId}/taskdetails/${element}`);
+  }
+
+  async function deleteTask(event, id) {
+    event.stopPropagation();
+    try {
+      const response = await fetch(`http://localhost:2003/projects/${projectId}/deleteTask/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Task deleted:', data);
+
+      // Update the tasks state to remove the deleted task
+      setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
   }
   return (
     <main className="tasks-page">
@@ -86,6 +126,9 @@ function Tasks() {
               >
                 {data.taskPriority || "medium"}
               </span>
+              <button className="delete-button" onClick={(e) => deleteTask(e, data.id)}>
+                <span>Delete</span>
+              </button>
             </li>
           ))}
         </ul>

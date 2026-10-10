@@ -6,6 +6,7 @@ import Tasks from "./Tasks";
 import Taskdetails from "./Taskdetails";
 import Projects from "./Projects";
 import AllProjects from "./AllProjects";
+import Login from "./Pages/Login";
 
 import "./index.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -20,7 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="tasks" element={<Tasks />}></Route>
         <Route path="taskdetails/:taskId" element={<Taskdetails />}></Route>
       </Route>
-      <Route path="dashboard" element={<DashBoard />}></Route>
+      <Route path="/login" element={<Login/>}></Route>
+      <Route path="/overview" element={<DashBoard />}></Route>
     </Routes>
   </BrowserRouter>,
 );

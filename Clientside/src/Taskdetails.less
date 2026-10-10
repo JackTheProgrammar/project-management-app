@@ -18,7 +18,8 @@
 		border-radius: 20px;
 		box-shadow: 0 @5x @12x rgba(28, 36, 48, 0.08);
 		padding: clamp(@7x, 6vw, @14x);
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		gap: @7x;
 		animation: fadeInUp 300ms ease-out;
 	}
@@ -66,18 +67,20 @@
 	}
 
 	.task-detail-body {
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		gap: @6x;
 
 		h1 {
-			font-size: clamp(30px, 4.5vw, 42px);
+			font-size: 18px;
 			line-height: 1.15;
 			margin: @0x;
 			color: @ink;
 		}
 
 		.task-section-group {
-			display: grid;
+			display: flex;
+			flex-direction: column;
 			gap: @2x;
 		}
 

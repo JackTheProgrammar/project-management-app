@@ -5,7 +5,7 @@ function DashBoard() {
     return (
         <>
             <div>
-                Dashboard
+                Overview
                 <Link to='/tasks'>Link To Taks</Link>
             </div>
         </>

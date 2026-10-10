@@ -6,12 +6,12 @@ function Taskdetails() {
   const params = useParams();
   const navigate = useNavigate();
   const [task, setTask] = useState(null);
-  xw;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.time('API Time');
     fetch(
-      `http://localhost:2001/projects/${params.projectId}/getTask/${params.taskId}`,
+      `http://localhost:2003/projects/${params.projectId}/getTask/${params.taskId}`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -22,6 +22,7 @@ function Taskdetails() {
         console.error("Failed to fetch task details", err);
         setLoading(false);
       });
+    console.timeEnd('API Time');
   }, []);
 
   if (loading) {
